@@ -24,10 +24,12 @@
         }
         public function login($email, $passwordd){
             $this->db->query('SELECT * FROM register WHERE email = :email');
+           
             //bind value
             $this->db->bind(':email', $email);
             
             $row = $this->db->single();
+            
             $hashedPassword = $row->passwordd;
             
             if(password_verify($passwordd, $hashedPassword)){

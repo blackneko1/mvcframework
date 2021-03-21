@@ -129,7 +129,7 @@ class Users extends Controller{
                 'email' => trim($_POST['email']),
                 'passwordd' => trim($_POST['passwordd']),
                 'emailError' => '',
-                'passwordError' => ''
+                'passwordError' => '',
             ];
             //validate email
             if(empty($data['email'])){
