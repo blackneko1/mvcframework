@@ -19,7 +19,9 @@
             <span class="invalidFeedback">
                 <?php echo $data['passwordError'];?>
             </span>
+            <div class="container">
             <button id="submit" type="submit" value="submit">Login</button> 
+            </div>
             <p class="options">Not Registered yet? &nbsp<a href="<?php echo URLROOT;
             ?>/users/register">Create an account.</a></p> 
         </form>

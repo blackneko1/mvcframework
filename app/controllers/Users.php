@@ -40,7 +40,7 @@ class Users extends Controller{
                 'confirmPasswordError' => ''
             ];
 
-            $nameValidation = "/^[a-zA-Z]*$/";
+            $nameValidation = "/^[a-z ,.'-]+$/i";
             $passwordValidation ="/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/";
             $contactValidation ="/[0-9]/";  
             //Validate username on letters
@@ -129,7 +129,7 @@ class Users extends Controller{
                 'email' => trim($_POST['email']),
                 'passwordd' => trim($_POST['passwordd']),
                 'emailError' => '',
-                'passwordError' => '',
+                'passwordError' => ''
             ];
             //validate email
             if(empty($data['email'])){
@@ -140,8 +140,9 @@ class Users extends Controller{
                 $data['passwordError'] = 'Please enter your password.';    
             }
             //check if all errors are empty
-            if(empty($data['email']) && empty($data['passwordd'])){
+            if(empty($data['emailError']) && empty($data['passwordError'])){
                 $loggedInUser = $this->userModel->login($data['email'], $data['passwordd']);
+                
                 if($loggedInUser){
                     $this->createUserSession($loggedInUser);
                 }else{
@@ -161,7 +162,7 @@ class Users extends Controller{
         $this->view('users/login', $data);
     }
     public function createUserSession($user){
-        $_SESSION['sh_id'] = $user->sh_id;
+        $_SESSION['user_id'] = $user->sh_id;
         $_SESSION['lastname'] = $user->lastname;
         $_SESSION['firstname'] = $user->firstname;
         $_SESSION['addresss'] = $user->addresss;
@@ -170,7 +171,7 @@ class Users extends Controller{
         header('location:' . URLROOT . '/pages/index');
     }
     public function logout(){
-        unset($_SESSION['sh_id']);
+        unset($_SESSION['user_id']);
         unset($_SESSION['lastname']);
         unset($_SESSION['firstname']);
         unset($_SESSION['addresss']);
